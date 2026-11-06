@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#651b2b">
+<title>NARASI STYLES | All-in-One Shopping</title>
+<style>
+:root{--wine:#651b2b;--wine2:#8b3043;--gold:#c7a45b;--cream:#fffaf2;--ink:#282326;--muted:#766d70}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;color:var(--ink);background:#fff}
+.top{background:var(--wine);color:#fff;text-align:center;padding:8px;font-size:12px;letter-spacing:.4px}
+header{background:var(--cream);padding:16px 4%;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid #eee}
+.brand{font-family:Georgia,serif;color:var(--wine);font-size:25px;font-weight:bold;letter-spacing:1.5px}.tag{font-size:11px;color:var(--muted);margin-top:3px}
+.actions{display:flex;gap:8px;align-items:center}.btn{border:1px solid var(--wine);background:white;color:var(--wine);border-radius:22px;padding:9px 13px;cursor:pointer;font-weight:600}
+.search{width:min(100%,380px);padding:12px 15px;border:1px solid #ddd;border-radius:24px;font-size:14px}
+nav{display:flex;gap:8px;overflow:auto;padding:12px 4%;background:white;white-space:nowrap}
+nav button{border:0;background:#f7f0e9;padding:9px 14px;border-radius:20px;color:var(--wine);cursor:pointer}
+.hero{margin:16px 4%;padding:34px 7%;border-radius:18px;background:linear-gradient(110deg,#4d1423,#8b3043 60%,#c09b58);color:white;min-height:210px;display:flex;flex-direction:column;justify-content:center}
+.hero h1{font-family:Georgia,serif;font-size:clamp(30px,6vw,48px);margin:0 0 10px}.hero p{max-width:520px;line-height:1.5}.hero a{background:#fff;color:var(--wine);padding:11px 18px;border-radius:22px;text-decoration:none;width:max-content;font-weight:bold}
+.wrap{padding:12px 4% 40px}.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.sectionhead h2{font-family:Georgia,serif;color:var(--wine)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.card{border:1px solid #eee;border-radius:14px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+.card img{width:100%;aspect-ratio:1/1;object-fit:cover;background:#f5f1ed}.info{padding:11px;display:flex;flex-direction:column;gap:7px;flex:1}
+.name{font-weight:600;font-size:14px;line-height:1.3}.price{color:var(--wine);font-weight:bold}.old{color:#999;text-decoration:line-through;font-size:12px;margin-left:5px}
+.small{font-size:11px;color:var(--muted)}.cardbuttons{display:flex;gap:6px;margin-top:auto}.cardbuttons button{flex:1;padding:9px 5px;border-radius:8px;border:1px solid var(--wine);background:white;color:var(--wine);font-size:12px;cursor:pointer}.cardbuttons .buy{background:var(--wine);color:#fff}
+footer{background:#27191d;color:#fff;padding:28px 5%;line-height:1.8}footer a{color:#f3d99d}
+#drawer{display:none;position:fixed;inset:0;background:#0008;z-index:5}#panel{background:white;position:absolute;right:0;top:0;height:100%;width:min(92%,420px);padding:20px;overflow:auto}
+.cartrow{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #eee;padding:12px 0;font-size:14px}
+.empty{text-align:center;color:var(--muted);padding:30px}
+@media(max-width:850px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:580px){header{align-items:flex-start}.brand{font-size:21px}.search{order:3;width:100%}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.hero{padding:28px 7%;min-height:190px}.info{padding:9px}.name{font-size:13px}}
+</style>
+</head>
+<body>
+<div class="top">AFFORDABLE FINDS • FASHION • HOME • EVERYDAY ESSENTIALS</div>
+<header>
+  <div><div class="brand">NARASI STYLES</div><div class="tag">STYLE FOR EVERYONE • SHOP SMART</div></div>
+  <input id="search" class="search" placeholder="Search products..." aria-label="Search products">
+  <div class="actions">
+    <button class="btn" onclick="showWishlist()">♡ <span id="wishCount">0</span></button>
+    <button class="btn" onclick="openCart()">Cart (<span id="cartCount">0</span>)</button>
+  </div>
+</header>
+<nav id="categories"></nav>
+<section class="hero">
+  <h1>Discover Your Style</h1>
+  <p>Explore fashion, footwear, kitchen essentials and more — all in one place.</p>
+  <a href="#products">SHOP COLLECTION</a>
+</section>
+<main class="wrap" id="products">
+  <div class="sectionhead"><h2 id="heading">Featured Products</h2><span class="small">Curated finds from NARASI STYLES</span></div>
+  <div class="grid" id="grid"></div>
+</main>
+<footer>
+  <h2 style="font-family:Georgia,serif;color:#f3d99d">NARASI STYLES</h2>
+  <p>Fashion, home and everyday essentials in one place.</p>
+  <p><a id="telegram" href="https://t.me/narasi_styles" target="_blank" rel="noopener">Join our Telegram Channel</a></p>
+  <p>Contact / Orders: <a id="waLink" href="#">WhatsApp us</a></p>
+  <p class="small" style="color:#d6c9c9">Affiliate disclosure: Some product links may be affiliate links. We may earn a commission from qualifying purchases at no extra cost to you. Product prices and availability are controlled by the seller.</p>
+  <p class="small" style="color:#d6c9c9">© <span id="year"></span> NARASI STYLES</p>
+</footer>
+<div id="drawer" onclick="if(event.target.id==='drawer')closeCart()"><div id="panel">
+  <div style="display:flex;justify-content:space-between;align-items:center"><h2 id="panelTitle">Your Cart</h2><button class="btn" onclick="closeCart()">Close</button></div>
+  <div id="cartItems"></div><h3 id="total"></h3><button class="btn" style="background:var(--wine);color:white;width:100%" onclick="checkout()">Order via WhatsApp</button>
+</div></div>
+<script>
+// EDIT THESE SETTINGS before publishing:
+const WHATSAPP_NUMBER = "91XXXXXXXXXX"; // Replace with your WhatsApp number, country code + number, no + sign.
+const TELEGRAM_LINK = "https://t.me/narasi_styles";
+
+// Replace sample products with products you are authorized to promote or sell.
+// type: "affiliate" opens affiliateUrl; type: "supplier" adds item to WhatsApp order cart.
+const products = [
+ {id:1,name:"Elegant Bandhani Kurta Set",category:"Women",price:975,oldPrice:1499,type:"supplier",image:"https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=700",description:"Women's ethnic wear"},
+ {id:2,name:"Classic Men's Casual Shirt",category:"Men",price:699,oldPrice:999,type:"supplier",image:"https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=700",description:"Everyday casual wear"},
+ {id:3,name:"Kids Everyday Outfit",category:"Kids",price:499,oldPrice:799,type:"supplier",image:"https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=700",description:"Comfortable kids wear"},
+ {id:4,name:"Women's Everyday Sneakers",category:"Shoes",price:899,oldPrice:1299,type:"supplier",image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=700",description:"Casual footwear"},
+ {id:5,name:"Kitchen Cookware Set",category:"Kitchen",price:799,oldPrice:1199,type:"supplier",image:"https://images.unsplash.com/photo-1556911220-bff31c812dba?w=700",description:"Kitchen essentials"},
+ {id:6,name:"Minimal Home Decor",category:"Home",price:599,oldPrice:899,type:"supplier",image:"https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=700",description:"Home decor"},
+ {id:7,name:"Wireless Headphones",category:"Electronics",price:1299,oldPrice:1799,type:"affiliate",affiliateUrl:"https://example.com/your-affiliate-link",image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=700",description:"Audio accessories"},
+ {id:8,name:"Women's Handbag",category:"Women",price:749,oldPrice:1099,type:"supplier",image:"https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=700",description:"Fashion accessories"}
+];
+let cart=[],wishlist=[],activeCategory="All",wishlistMode=false;
+const cats=["All","Women","Men","Kids","Shoes","Kitchen","Home","Electronics"];
+const money=n=>"₹"+Number(n).toLocaleString("en-IN");
+document.getElementById("categories").innerHTML=cats.map(c=>`<button onclick="filterCategory('${c}')">${c==="All"?"All Products":c}</button>`).join("");
+document.getElementById("telegram").href=TELEGRAM_LINK;
+document.getElementById("waLink").href="https://wa.me/"+WHATSAPP_NUMBER;
+document.getElementById("year").textContent=new Date().getFullYear();
+function render(){
+ const q=document.getElementById("search").value.toLowerCase();
+ let list=products.filter(p=>(activeCategory==="All"||p.category===activeCategory)&&(`${p.name} ${p.category} ${p.description}`.toLowerCase().includes(q)));
+ if(wishlistMode)list=list.filter(p=>wishlist.includes(p.id));
+ document.getElementById("heading").textContent=wishlistMode?"Your Wishlist":activeCategory==="All"?"Featured Products":activeCategory+" Collection";
+ document.getElementById("grid").innerHTML=list.length?list.map(p=>`<article class="card"><img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='https://placehold.co/600x600/f5f1ed/651b2b?text=NARASI+STYLES'"><div class="info"><div class="name">${p.name}</div><div><span class="price">${money(p.price)}</span><span class="old">${money(p.oldPrice)}</span></div><div class="small">${p.type==="affiliate"?"Affiliate product":"Supplier product"} • ${p.category}</div><div class="cardbuttons"><button onclick="toggleWish(${p.id})">${wishlist.includes(p.id)?"♥ Saved":"♡ Wishlist"}</button><button class="buy" onclick="buy(${p.id})">${p.type==="affiliate"?"View Deal":"Add to Cart"}</button></div></div></article>`).join(""):`<div class="empty">No products found. Try another search or category.</div>`;
+ document.getElementById("cartCount").textContent=cart.reduce((s,x)=>s+x.qty,0);document.getElementById("wishCount").textContent=wishlist.length;
+}
+function filterCategory(c){activeCategory=c;wishlistMode=false;render();document.getElementById("products").scrollIntoView({behavior:"smooth"});}
+document.getElementById("search").addEventListener("input",render);
+function toggleWish(id){wishlist.includes(id)?wishlist=wishlist.filter(x=>x!==id):wishlist.push(id);render();}
+function showWishlist(){wishlistMode=true;render();document.getElementById("products").scrollIntoView({behavior:"smooth"});}
+function buy(id){let p=products.find(x=>x.id===id);if(p.type==="affiliate"){if(!p.affiliateUrl||p.affiliateUrl.includes("example.com")){alert("Add your real approved affiliate link in the products list first.");return;}window.open(p.affiliateUrl,"_blank");}else{addCart(id);openCart();}}
+function addCart(id){let item=cart.find(x=>x.id===id);item?item.qty++:cart.push({id,qty:1});render();}
+function openCart(){document.getElementById("drawer").style.display="block";drawCart();}
+function closeCart(){document.getElementById("drawer").style.display="none";}
+function drawCart(){let el=document.getElementById("cartItems");el.innerHTML=cart.length?cart.map(x=>{let p=products.find(y=>y.id===x.id);return `<div class="cartrow"><span>${p.name}<br>${money(p.price)} × ${x.qty}</span><span><button onclick="changeQty(${x.id},-1)">−</button> ${x.qty} <button onclick="changeQty(${x.id},1)">+</button></span></div>`}).join(""):`<div class="empty">Your cart is empty.</div>`;document.getElementById("total").textContent="Total: "+money(cart.reduce((s,x)=>s+products.find(p=>p.id===x.id).price*x.qty,0));}
+function changeQty(id,n){let x=cart.find(a=>a.id===id);if(x){x.qty+=n;if(x.qty<=0)cart=cart.filter(a=>a.id!==id);}render();drawCart();}
+function checkout(){if(!cart.length){alert("Your cart is empty.");return;}if(WHATSAPP_NUMBER.includes("X")){alert("First replace WHATSAPP_NUMBER in index.html with your WhatsApp number.");return;}let lines=cart.map(x=>{let p=products.find(y=>y.id===x.id);return `${p.name} x ${x.qty} - ${money(p.price*x.qty)}`});let total=cart.reduce((s,x)=>s+products.find(p=>p.id===x.id).price*x.qty,0);let msg="Hello NARASI STYLES, I want to order:%0A"+encodeURIComponent(lines.join("\n"))+"%0ATotal: "+money(total)+"%0APlease confirm availability, delivery charges and payment options.";window.open("https://wa.me/"+WHATSAPP_NUMBER+"?text="+msg,"_blank");}
+render();
+</script>
+</body>
+</html>
